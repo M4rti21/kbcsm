@@ -1,4 +1,5 @@
-import { useCurrentStore } from "../store/keybinds";
+import { useRef } from "react";
+import { useKeybindStore } from "../store/keybinds";
 import { IKey } from "../types/keyboard";
 
 export const KeyBtn = (p: {
@@ -7,29 +8,15 @@ export const KeyBtn = (p: {
     height?: number;
     modifier?: boolean;
 }) => {
-    const combo = useCurrentStore((state) => state.combo);
-    const setCombo = useCurrentStore((state) => state.setCombo);
+    const addKey = useKeybindStore((state) => state.addKey);
+    const btnRef = useRef<HTMLButtonElement | null>(null);
 
     function handleOnClick() {
-        if (p.modifier) {
-            addModifier();
-        } else {
-            addKey();
-        }
-    }
-
-    function addModifier() {
-        if (!combo) return;
-        const modifiers = combo.modifiers;
-        modifiers.push(p.Okey);
-        setCombo({ ...combo, modifiers });
-    }
-
-    function addKey() {
-        if (!combo) return;
-        const keys = combo.keys;
-        keys.push(p.Okey);
-        setCombo({ ...combo, keys });
+        btnRef.current?.classList.add("clicked");
+        setTimeout(() => {
+            btnRef.current?.classList.remove("clicked");
+        }, 100);
+        addKey(p.Okey, p.modifier);
     }
 
     return (
@@ -41,6 +28,7 @@ export const KeyBtn = (p: {
                 height: `${p.height || 1}rem`,
                 lineHeight: `${p.height || 1}rem`,
             }}
+            ref={btnRef}
             onClick={handleOnClick}
         >
             {p.Okey.glyph}

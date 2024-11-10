@@ -1,21 +1,12 @@
-export interface KeybindData {
-    actions: Map<string, ActionInfo>;
-    combos: KeyCombo[];
-}
-
-export interface KeyCombo {
-    action_id: string;
-    modifiers: IKey[];
+export type KeyCombo = {
+    mods: IKey[];
     keys: IKey[];
-}
-
-export interface ActionInfo {
-    name?: string;
     desc?: string;
-}
+    group?: string;
+};
 
-export interface IKey {
+export type IKey = {
     code: string;
     glyph: string;
     desc?: string;
-}
+};

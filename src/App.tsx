@@ -1,40 +1,30 @@
 import { useEffect } from "react";
 import { Tooltip } from "react-tooltip";
+import ComboTable from "./components/ComboTable";
 import CurrentComboDisplay from "./components/CurrentComboDisplay";
 import CurrentComboInfo from "./components/CurrentComboInfo";
 import Keyboard from "./components/KeyboardDisplay";
-import { useCurrentStore, useKeybindsStore } from "./store/keybinds";
+import { useKeybindStore } from "./store/keybinds";
 
 function App() {
-    const combos = useKeybindsStore((state) => state.combos);
-    const actions = useKeybindsStore((state) => state.actions);
-    const combo = useCurrentStore((state) => state.combo);
-    const commitCurrent = useCurrentStore((state) => state.commitCurrent);
-    const dismissCurrent = useCurrentStore((state) => state.dismissCurrent);
-    const setCombo = useCurrentStore((state) => state.setCombo);
+    const current_combo = useKeybindStore((state) => state.current_combo);
+    const initCurrent = useKeybindStore((state) => state.initCurrent);
+    const dismissCurrent = useKeybindStore((state) => state.dismissCurrent);
+    const commitCurrent = useKeybindStore((state) => state.commitCurrent);
 
     useEffect(() => {
-        console.log(combos);
-        console.log(actions);
-    }, [combos, actions]);
-
-    function handleOnClick() {
-        setCombo({
-            action_id: "",
-            modifiers: [],
-            keys: [],
-        });
-    }
+        console.log(current_combo);
+    }, [current_combo]);
 
     return (
         <>
-            <Tooltip id="tooltip" />
+            <Tooltip id="tooltip" className="z-50" />
             <div className="w-screen h-screen flex flex-col gap-8 items-center justify-center">
                 <Keyboard />
-                {!combo ? (
+                {!current_combo ? (
                     <button
                         className="inline-flex items-center gap-2 rounded border border-indigo-600 bg-indigo-600 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-                        onClick={handleOnClick}
+                        onClick={initCurrent}
                     >
                         Create new keybind
                     </button>
@@ -58,6 +48,7 @@ function App() {
                         </div>
                     </>
                 )}
+                <ComboTable />
             </div>
         </>
     );
