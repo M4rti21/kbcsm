@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import keybindsSlice from "./keybinds.slice";
+import keybindsReducer from "./keybinds.slice";
 
 export const store = configureStore({
     reducer: {
-        keybinds: keybindsSlice,
+        keybinds: keybindsReducer,
     },
 });
 

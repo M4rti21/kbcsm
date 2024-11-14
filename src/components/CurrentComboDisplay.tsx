@@ -1,16 +1,19 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useKeybindStore } from "../store/keybinds";
+import { useDispatch, useSelector } from "react-redux";
+import { delKey } from "../store/keybinds.slice";
+import { RootState } from "../store/store";
 import { IKey } from "../types/keyboard";
 
 function CurrentComboDisplay() {
-    const current_combo = useKeybindStore((state) => state.current_combo);
+    const current = useSelector((state: RootState) => state.keybinds.current);
+
     return (
         <div className="border rounded-lg flex flex-row">
             <div className="p-3 flex flex-col gap-2">
                 <span className="text-xs font-medium text-gray-700">Mods</span>
                 <div className="flex flex-row gap-2">
-                    {current_combo?.mods.map((key, i) => (
+                    {current?.mods.map((key, i) => (
                         <KeyDisplay
                             key={i}
                             index={i}
@@ -25,7 +28,7 @@ function CurrentComboDisplay() {
             <div className="p-3 flex flex-col gap-2">
                 <span className="text-xs font-medium text-gray-700">Keys</span>
                 <div className="flex flex-row gap-2">
-                    {current_combo?.keys.map((key, i) => (
+                    {current?.keys.map((key, i) => (
                         <KeyDisplay key={i} index={i} Okey={key} editable />
                     ))}
                 </div>
@@ -40,11 +43,11 @@ export function KeyDisplay(p: {
     modifier?: boolean;
     editable?: boolean;
 }) {
-    const delKey = useKeybindStore((state) => state.delKey);
+    const dispatch = useDispatch();
 
     function handleClick() {
         if (!p.editable) return;
-        delKey(p.index, p.modifier);
+        dispatch(delKey({ index: p.index, mod: p.modifier }));
     }
 
     return (

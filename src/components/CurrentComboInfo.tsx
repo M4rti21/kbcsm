@@ -1,14 +1,16 @@
 import { useRef } from "react";
-import { useKeybindStore } from "../store/keybinds";
+import { useDispatch, useSelector } from "react-redux";
+import { setDesc } from "../store/keybinds.slice";
+import { RootState } from "../store/store";
 
 function CurrentComboInfo() {
-    const current_combo = useKeybindStore((state) => state.current_combo);
-    const setAction = useKeybindStore((state) => state.setAction);
-
+    const current = useSelector((state: RootState) => state.keybinds.current);
     const ref = useRef<HTMLInputElement | null>(null);
 
+    const dispatch = useDispatch();
+
     function handleChange() {
-        setAction(ref.current?.value);
+        dispatch(setDesc({ desc: ref.current?.value || "" }));
     }
 
     return (
@@ -20,7 +22,7 @@ function CurrentComboInfo() {
                 <input
                     ref={ref}
                     type="text"
-                    defaultValue={current_combo?.desc}
+                    defaultValue={current?.desc}
                     onChange={handleChange}
                     className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
                 />

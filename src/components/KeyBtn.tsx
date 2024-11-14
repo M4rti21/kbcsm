@@ -1,22 +1,24 @@
 import { useRef } from "react";
-import { useKeybindStore } from "../store/keybinds";
+import { useDispatch } from "react-redux";
+import { addKey } from "../store/keybinds.slice";
 import { IKey } from "../types/keyboard";
 
 export const KeyBtn = (p: {
-    Okey: IKey;
+    keyD: IKey;
     width?: number;
     height?: number;
     modifier?: boolean;
 }) => {
-    const addKey = useKeybindStore((state) => state.addKey);
     const btnRef = useRef<HTMLButtonElement | null>(null);
+
+    const dispatch = useDispatch();
 
     function handleOnClick() {
         btnRef.current?.classList.add("clicked");
         setTimeout(() => {
             btnRef.current?.classList.remove("clicked");
         }, 100);
-        addKey(p.Okey, p.modifier);
+        dispatch(addKey({ key: p.keyD, mod: p.modifier }));
     }
 
     return (
@@ -31,7 +33,7 @@ export const KeyBtn = (p: {
             ref={btnRef}
             onClick={handleOnClick}
         >
-            {p.Okey.glyph}
+            {p.keyD.glyph}
         </button>
     );
 };
