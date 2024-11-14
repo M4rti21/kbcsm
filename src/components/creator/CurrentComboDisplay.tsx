@@ -1,9 +1,9 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import { delKey } from "../store/keybinds.slice";
-import { RootState } from "../store/store";
-import { IKey } from "../types/keyboard";
+import { RootState } from "../../store/keybinds";
+import { delKey } from "../../store/keybinds.slice";
+import { IKey } from "../../types/keyboard";
 
 function CurrentComboDisplay() {
     const current = useSelector((state: RootState) => state.keybinds.current);

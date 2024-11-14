@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDesc } from "../store/keybinds.slice";
-import { RootState } from "../store/store";
+import { setDesc } from "../../store/keybinds.slice";
+import { RootState } from "../../store/store";
 
 function CurrentComboInfo() {
     const current = useSelector((state: RootState) => state.keybinds.current);

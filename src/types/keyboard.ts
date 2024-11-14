@@ -1,7 +1,8 @@
 export type KeyCombo = {
+    id: string;
     mods: IKey[];
     keys: IKey[];
-    desc?: string;
+    desc: string;
     group?: string;
 };
 

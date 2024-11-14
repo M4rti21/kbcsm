@@ -8,6 +8,7 @@ export const KeyBtn = (p: {
     width?: number;
     height?: number;
     modifier?: boolean;
+    scale?: number;
 }) => {
     const btnRef = useRef<HTMLButtonElement | null>(null);
 
@@ -25,10 +26,10 @@ export const KeyBtn = (p: {
         <button
             className="m-0 cursor-pointer select-none rounded-sm border border-base-content bg-opacity-75 p-0 text-center has-[:disabled]:cursor-default has-[:checked]:bg-secondary"
             style={{
-                fontSize: "0.5rem",
-                width: `${p.width || 1}rem`,
-                height: `${p.height || 1}rem`,
-                lineHeight: `${p.height || 1}rem`,
+                fontSize: `${0.5 * (p.scale || 1)}rem`,
+                width: `${(p.width || 1) * (p.scale || 1)}rem`,
+                height: `${(p.height || 1) * (p.scale || 1)}rem`,
+                lineHeight: `${(p.height || 1) * (p.scale || 1)}rem`,
             }}
             ref={btnRef}
             onClick={handleOnClick}
