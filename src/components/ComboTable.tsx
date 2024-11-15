@@ -5,27 +5,34 @@ import { KeyCombo } from "../types/keyboard";
 import { KeyDisplay } from "./creator/CurrentComboDisplay";
 
 function ComboTable() {
-    const combos = useSelector((state: RootState) => state.keybinds.combos);
+    const groups = useSelector(
+        (state: RootState) => state.keybinds.collection.groups
+    );
     return (
         <div className="overflow-x-auto">
-            <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                <thead>
-                    <tr>
-                        <th />
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                            Keys
-                        </th>
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                            Description
-                        </th>
-                    </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                    {Object.entries(combos).map(([k, combo]) => (
-                        <ComboRow key={k} combo={combo} />
-                    ))}
-                </tbody>
-            </table>
+            {Object.entries(groups).map(([k, v]) => (
+                <div>
+                    <h3>{k}</h3>
+                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                        <thead>
+                            <tr>
+                                <th />
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                                    Keys
+                                </th>
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                                    Description
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                            {Object.entries(v).map(([k, combo]) => (
+                                <ComboRow key={k} combo={combo} />
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            ))}
         </div>
     );
 }

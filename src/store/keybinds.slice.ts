@@ -1,16 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { IKey, KeyCombo } from "../types/keyboard";
-
-type CombosData = { [key: string]: KeyCombo };
+import { Collection, IKey, KeyCombo } from "../types/keyboard";
 
 type KeybindState = {
-    combos: CombosData;
+    collection: Collection;
     current: KeyCombo | null;
 };
 
 const initialState: KeybindState = {
-    combos: {},
+    collection: {
+        name: "",
+        groups: {},
+    },
     current: null,
 };
 
@@ -57,7 +58,7 @@ export const keybindsSlice = createSlice({
         },
         commitCurrent: (state) => {
             if (!state.current) return;
-            const combos = state.combos;
+            const combos = state.collection.groups[""];
 
             const id =
                 state.current.mods.map((k) => k.code).join("") +
@@ -73,13 +74,14 @@ export const keybindsSlice = createSlice({
             state,
             action: PayloadAction<{ id: string; desc: string }>
         ) => {
-            state.combos[action.payload.id].desc = action.payload.desc;
+            state.collection.groups[""][action.payload.id].desc =
+                action.payload.desc;
         },
         deleteCombo: (state, action: PayloadAction<string>) => {
-            delete state.combos[action.payload];
+            delete state.collection.groups[""][action.payload];
         },
-        setCombos: (state, action: PayloadAction<CombosData>) => {
-            state.combos = action.payload;
+        setCollection: (state, action: PayloadAction<Collection>) => {
+            state.collection = action.payload;
         },
     },
 });
@@ -93,7 +95,7 @@ export const {
     dismissCurrent,
     editDesc,
     deleteCombo,
-    setCombos,
+    setCollection,
 } = keybindsSlice.actions;
 
 export default keybindsSlice.reducer;

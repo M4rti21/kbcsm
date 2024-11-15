@@ -1,29 +1,27 @@
-import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     commitCurrent,
     dismissCurrent,
     initCurrent,
-    setCombos,
 } from "../../store/keybinds.slice";
 import { RootState } from "../../store/store";
 import ComboTable from "../ComboTable";
 import CurrentComboDisplay from "./CurrentComboDisplay";
 import CurrentComboInfo from "./CurrentComboInfo";
 import KeyboardDisplay from "../KeyboardDisplay";
-import Button, { FileInput } from "../web/Inputs";
+import { Button } from "../web/Inputs";
 
 function Creator() {
-    const combos = useSelector((state: RootState) => state.keybinds.combos);
+    const collection = useSelector(
+        (state: RootState) => state.keybinds.collection
+    );
     const current = useSelector((state: RootState) => state.keybinds.current);
 
     const dispatch = useDispatch();
 
-    let fileReader: FileReader;
-
     function exportCombos() {
         const fileName = "my-file";
-        const json = JSON.stringify(combos, null, 2);
+        const json = JSON.stringify(collection, null, 2);
         const blob = new Blob([json], { type: "application/json" });
         const href = URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -35,23 +33,9 @@ function Creator() {
         URL.revokeObjectURL(href);
     }
 
-    function importCombos(e: ChangeEvent<HTMLInputElement>) {
-        const file = e.target?.files?.[0];
-        if (!file) return;
-        fileReader = new FileReader();
-        fileReader.onloadend = function () {
-            const content = this.result;
-            if (typeof content === "string") {
-                dispatch(setCombos(JSON.parse(content)));
-            }
-        };
-        fileReader.readAsText(file);
-    }
-
     if (!current) {
         return (
             <div className="flex flex-row gap-4">
-                <FileInput label="Import" onChange={importCombos} />
                 <Button label="Export " onClick={exportCombos} />
                 <Button
                     label="New Keybind"
