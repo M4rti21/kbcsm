@@ -8,9 +8,10 @@ function ComboTable() {
     const groups = useSelector(
         (state: RootState) => state.keybinds.collection.groups
     );
+
     return (
         <div className="overflow-x-auto">
-            {Object.entries(groups).map(([k, v]) => (
+            {Object.entries(groups || {}).map(([k, v]) => (
                 <div>
                     <h3>{k}</h3>
                     <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -45,7 +46,11 @@ function ComboRow(p: { combo: KeyCombo }) {
             <td>
                 <button
                     className="rounded-full size-8 border border-red-600 text-indigo-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring active:bg-red-500"
-                    onClick={() => dispatch(deleteCombo(p.combo.id))}
+                    onClick={() =>
+                        dispatch(
+                            deleteCombo({ combo_id: p.combo.id, group_id: "" })
+                        )
+                    }
                 >
                     x
                 </button>

@@ -89,7 +89,7 @@ function KeyboardDisplay(p: { scale: number }) {
                             scale={p.scale}
                             keyD={KEYS.return}
                             width={2.25}
-                        />{" "}
+                        />
                     </div>
                     <div className="flex flex-row items-start">
                         <KeyBtn
@@ -182,12 +182,12 @@ function KeyboardDisplay(p: { scale: number }) {
                         <KeyBtn scale={p.scale} keyD={KEYS.pgdn} />
                     </div>
                     <div className="flex flex-row items-start">
-                        <Empty />
+                        <Empty scale={p.scale} />
                     </div>
                     <div className="flex flex-row items-start">
-                        <Empty />
+                        <Empty scale={p.scale} />
                         <KeyBtn scale={p.scale} keyD={KEYS.uparr} />
-                        <Empty />
+                        <Empty scale={p.scale} />
                     </div>
                     <div className="flex flex-row items-start">
                         <KeyBtn scale={p.scale} keyD={KEYS.larr} />
@@ -198,7 +198,7 @@ function KeyboardDisplay(p: { scale: number }) {
                 <div className="flex flex-row">
                     <div className="flex flex-col">
                         <div className="mb-1 flex flex-row items-start">
-                            <Empty />
+                            <Empty scale={p.scale} />
                         </div>
                         <div className="flex flex-row items-start">
                             <KeyBtn scale={p.scale} keyD={KEYS.nlk} />
@@ -227,7 +227,7 @@ function KeyboardDisplay(p: { scale: number }) {
                     </div>
                     <div className="flex flex-col">
                         <div className="mb-1 flex flex-row items-start">
-                            <Empty />
+                            <Empty scale={p.scale} />
                         </div>
                         <div className="flex flex-row items-start">
                             <KeyBtn scale={p.scale} keyD={KEYS.nmin} />

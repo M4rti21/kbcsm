@@ -10,7 +10,9 @@ type KeybindState = {
 const initialState: KeybindState = {
     collection: {
         name: "",
-        groups: {},
+        groups: {
+            default: {},
+        },
     },
     current: null,
 };
@@ -56,15 +58,17 @@ export const keybindsSlice = createSlice({
                 desc: "",
             };
         },
-        commitCurrent: (state) => {
+        commitCurrent: (state, action: PayloadAction<{ group_id: string }>) => {
             if (!state.current) return;
-            const combos = state.collection.groups[""];
 
             const id =
                 state.current.mods.map((k) => k.code).join("") +
                 state.current.keys.map((k) => k.code).join("");
 
-            combos[id] = { ...state.current, id };
+            state.collection.groups[action.payload.group_id][id] = {
+                ...state.current,
+                id,
+            };
             state.current = null;
         },
         dismissCurrent: (state) => {
@@ -72,13 +76,23 @@ export const keybindsSlice = createSlice({
         },
         editDesc: (
             state,
-            action: PayloadAction<{ id: string; desc: string }>
+            action: PayloadAction<{
+                group_id: string;
+                combo_id: string;
+                desc: string;
+            }>
         ) => {
-            state.collection.groups[""][action.payload.id].desc =
-                action.payload.desc;
+            state.collection.groups[action.payload.group_id][
+                action.payload.combo_id
+            ].desc = action.payload.desc;
         },
-        deleteCombo: (state, action: PayloadAction<string>) => {
-            delete state.collection.groups[""][action.payload];
+        deleteCombo: (
+            state,
+            action: PayloadAction<{ group_id: string; combo_id: string }>
+        ) => {
+            delete state.collection.groups[action.payload.group_id][
+                action.payload.combo_id
+            ];
         },
         setCollection: (state, action: PayloadAction<Collection>) => {
             state.collection = action.payload;

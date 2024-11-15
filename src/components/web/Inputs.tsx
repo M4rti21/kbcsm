@@ -10,9 +10,9 @@ export enum Color {
 }
 
 export function Button(p: {
-    onClick?: () => void;
     label: string;
     color?: Color;
+    onClick?: () => void;
 }) {
     return (
         <button
@@ -48,9 +48,9 @@ export function Input(p: {
 }
 
 export function FileInput(p: {
-    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     label: string;
     color?: Color;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
     return (
         <label

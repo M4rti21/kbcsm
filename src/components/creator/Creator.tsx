@@ -57,7 +57,7 @@ function Creator() {
                 />
                 <Button
                     label="Save"
-                    onClick={() => dispatch(commitCurrent())}
+                    onClick={() => dispatch(commitCurrent({ group_id: "" }))}
                 />
             </div>
             <ComboTable />

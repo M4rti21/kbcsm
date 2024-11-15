@@ -39,4 +39,11 @@ export const KeyBtn = (p: {
     );
 };
 
-export const Empty = () => <div className="size-4" />;
+export const Empty = (p: { scale: number }) => (
+    <div
+        style={{
+            width: `${1 * (p.scale || 1)}rem`,
+            height: `${1 * (p.scale || 1)}rem`,
+        }}
+    />
+);
